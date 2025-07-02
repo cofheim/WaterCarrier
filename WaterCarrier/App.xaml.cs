@@ -39,19 +39,19 @@ public partial class App : System.Windows.Application
     {
         var services = new ServiceCollection();
 
-        // 1. NHibernate SessionFactory (Singleton)
+        // 1. NHibernate SessionFactory
         services.AddSingleton<ISessionFactory>(provider =>
         {
             var configuration = new Configuration();
-            configuration.Configure(); // Загружает hibernate.cfg.xml
-            configuration.AddAssembly(typeof(EmployeeEntity).Assembly); // Находит все *.hbm.xml
+            configuration.Configure();
+            configuration.AddAssembly(typeof(EmployeeEntity).Assembly);
             return configuration.BuildSessionFactory();
         });
 
-        // 2. NHibernate Session (Scoped)
+        // 2. NHibernate Session 
         services.AddScoped(provider => provider.GetRequiredService<ISessionFactory>().OpenSession());
 
-        // 3. Репозитории (Scoped)
+        // 3. Репозитории 
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
@@ -60,8 +60,8 @@ public partial class App : System.Windows.Application
         services.AddSingleton<IDialogService, DialogService>();
 
         // 5. ViewModels
-        services.AddSingleton<MainViewModel>(); // MainViewModel - глобальный, поэтому Singleton
-        services.AddTransient<EmployeeViewModel>(); // Остальные - по требованию (Transient)
+        services.AddSingleton<MainViewModel>();
+        services.AddTransient<EmployeeViewModel>(); 
         services.AddTransient<CounterpartyViewModel>();
         services.AddTransient<OrderViewModel>();
         services.AddTransient<EmployeeEditorViewModel>();

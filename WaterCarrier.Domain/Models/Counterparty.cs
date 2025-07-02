@@ -3,7 +3,7 @@ namespace WaterCarrier.Domain.Models
     public class Counterparty
     {
         /// <summary>
-        /// Приватный конструктор для создания "пустого" объекта через фабричный метод при ошибке валидации.
+        /// Приватный конструктор для создания пустого объекта через фабричный метод при ошибке валидации.
         /// Инициализирует поля значениями по умолчанию для предсказуемого и безопасного состояния.
         /// </summary>
         private Counterparty()
@@ -14,9 +14,6 @@ namespace WaterCarrier.Domain.Models
             Curator = null!;
         }
 
-        /// <summary>
-        /// Уникальный идентификатор сущности.
-        /// </summary>
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Inn { get; private set; }
@@ -58,7 +55,7 @@ namespace WaterCarrier.Domain.Models
                 error = "Необходимо указать куратора.";
 
             // Тернарный оператор для возврата результата.
-            // Если была найдена ошибка, возвращается "пустой" объект Counterparty и текст ошибки.
+            // Если была найдена ошибка, возвращается пустой объект Counterparty и текст ошибки.
             // В противном случае создается и возвращается валидный объект Counterparty с новым Guid и пустой строкой ошибки.
             return !string.IsNullOrEmpty(error) ? (new Counterparty(), error) : (new Counterparty
             {

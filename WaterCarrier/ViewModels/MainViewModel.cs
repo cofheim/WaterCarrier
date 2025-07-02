@@ -15,7 +15,7 @@ namespace WaterCarrier.ViewModels
         public MainViewModel(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
-            ShowEmployeeView(); // Показываем список сотрудников по умолчанию
+            ShowEmployeeView(); 
         }
 
         [RelayCommand]

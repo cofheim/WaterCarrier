@@ -8,8 +8,6 @@ namespace WaterCarrier.Infrastructure.Mappers
     {
         public static Employee ToDomain(EmployeeEntity entity)
         {
-            // Используем внутренний конструктор для воссоздания объекта, доверяя данным из БД.
-            // Валидация здесь не нужна, т.к. она должна была быть при первоначальном создании.
             return new Employee(entity.Id, entity.LastName, entity.FirstName, entity.Patronymic, entity.BirthDate, (Position)entity.Position);
         }
 

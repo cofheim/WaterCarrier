@@ -4,9 +4,6 @@ using WaterCarrier.ViewModels;
 
 namespace WaterCarrier.Views
 {
-    /// <summary>
-    /// Interaction logic for EmployeeEditorView.xaml
-    /// </summary>
     public partial class EmployeeEditorView : Window
     {
         public EmployeeEditorView()

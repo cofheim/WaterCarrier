@@ -5,7 +5,7 @@ namespace WaterCarrier.Domain.Models
     public class Employee
     {
         /// <summary>
-        /// Приватный конструктор для создания "пустого" объекта через фабричный метод при ошибке валидации.
+        /// Приватный конструктор для создания пустого объекта через фабричный метод при ошибке валидации.
         /// Инициализирует поля значениями по умолчанию для предсказуемого и безопасного состояния.
         /// </summary>
         private Employee()
@@ -17,9 +17,6 @@ namespace WaterCarrier.Domain.Models
             BirthDate = DateTime.MinValue;
         }
 
-        /// <summary>
-        /// Уникальный идентификатор сущности.
-        /// </summary>
         public Guid Id { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -62,8 +59,7 @@ namespace WaterCarrier.Domain.Models
             else if (birthDate > DateTime.UtcNow)
                 error = "Дата рождения не может быть в будущем.";
 
-            // Тернарный оператор для возврата результата.
-            // Если была найдена ошибка, возвращается "пустой" объект Employee и текст ошибки.
+            // Если была найдена ошибка, возвращается пустой объект Employee и текст ошибки.
             // В противном случае создается и возвращается валидный объект Employee с новым Guid и пустой строкой ошибки.
             return !string.IsNullOrEmpty(error) ? (new Employee(), error) : (new Employee
             {
