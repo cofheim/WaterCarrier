@@ -3,9 +3,9 @@
   <session-factory>
     
     <!-- Connection settings -->
-    <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
+    <property name="connection.driver_class">NHibernate.Driver.MySqlConnector.MySqlConnectorDriver, NHibernate.Driver.MySqlConnector</property>
     <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
-    <property name="dialect">NHibernate.Dialect.MariaDbDialect</property>
+    <property name="dialect">NHibernate.Dialect.MySQL8Dialect</property>
     <property name="connection.connection_string">
       Server=localhost;Port=3306;Database=water_carrier_db;User ID=root;Password=Ellenoize2002;
     </property>

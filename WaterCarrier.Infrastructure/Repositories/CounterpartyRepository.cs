@@ -7,65 +7,53 @@ using System.Threading.Tasks;
 using WaterCarrier.Application.Interfaces;
 using WaterCarrier.Domain.Models;
 using WaterCarrier.Infrastructure.Mappers;
-using WaterCarrier.Infrastructure.Persistence;
 using WaterCarrier.Infrastructure.Persistence.Entities;
 
 namespace WaterCarrier.Infrastructure.Repositories
 {
     public class CounterpartyRepository : ICounterpartyRepository
     {
+        private readonly ISession _session;
+
+        public CounterpartyRepository(ISession session)
+        {
+            _session = session;
+        }
+
         public async Task AddAsync(Counterparty counterparty)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                var counterpartyEntity = CounterpartyMapper.ToEntity(counterparty);
-                await session.SaveAsync(counterpartyEntity);
-                await transaction.CommitAsync();
-            }
+            var entity = CounterpartyMapper.ToEntity(counterparty);
+            await _session.SaveAsync(entity);
+            await _session.FlushAsync();
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            var entity = await _session.GetAsync<CounterpartyEntity>(id);
+            if (entity != null)
             {
-                var counterpartyEntity = await session.GetAsync<CounterpartyEntity>(id);
-                if (counterpartyEntity != null)
-                {
-                    await session.DeleteAsync(counterpartyEntity);
-                    await transaction.CommitAsync();
-                }
+                await _session.DeleteAsync(entity);
+                await _session.FlushAsync();
             }
         }
 
-        public async Task<IEnumerable<Counterparty>> GetAllAsync()
+        public async Task<List<Counterparty>> GetAllAsync()
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                var counterpartyEntities = await session.Query<CounterpartyEntity>().ToListAsync();
-                return counterpartyEntities.Select(CounterpartyMapper.ToDomain);
-            }
+            var entities = await _session.Query<CounterpartyEntity>().ToListAsync();
+            return entities.Select(CounterpartyMapper.ToDomain).ToList();
         }
 
-        public async Task<Counterparty> GetByIdAsync(Guid id)
+        public async Task<Counterparty?> GetByIdAsync(Guid id)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                var counterpartyEntity = await session.GetAsync<CounterpartyEntity>(id);
-                return counterpartyEntity == null ? null : CounterpartyMapper.ToDomain(counterpartyEntity);
-            }
+            var entity = await _session.GetAsync<CounterpartyEntity>(id);
+            return entity != null ? CounterpartyMapper.ToDomain(entity) : null;
         }
 
         public async Task UpdateAsync(Counterparty counterparty)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                var counterpartyEntity = CounterpartyMapper.ToEntity(counterparty);
-                await session.UpdateAsync(counterpartyEntity);
-                await transaction.CommitAsync();
-            }
+            var entity = CounterpartyMapper.ToEntity(counterparty);
+            await _session.MergeAsync(entity);
+            await _session.FlushAsync();
         }
     }
 } 

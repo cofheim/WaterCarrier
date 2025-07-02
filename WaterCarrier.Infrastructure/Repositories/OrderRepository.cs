@@ -7,65 +7,53 @@ using System.Threading.Tasks;
 using WaterCarrier.Application.Interfaces;
 using WaterCarrier.Domain.Models;
 using WaterCarrier.Infrastructure.Mappers;
-using WaterCarrier.Infrastructure.Persistence;
 using WaterCarrier.Infrastructure.Persistence.Entities;
 
 namespace WaterCarrier.Infrastructure.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
+        private readonly ISession _session;
+
+        public OrderRepository(ISession session)
+        {
+            _session = session;
+        }
+
         public async Task AddAsync(Order order)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                var orderEntity = OrderMapper.ToEntity(order);
-                await session.SaveAsync(orderEntity);
-                await transaction.CommitAsync();
-            }
+            var entity = OrderMapper.ToEntity(order);
+            await _session.SaveAsync(entity);
+            await _session.FlushAsync();
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
+            var entity = await _session.GetAsync<OrderEntity>(id);
+            if (entity != null)
             {
-                var orderEntity = await session.GetAsync<OrderEntity>(id);
-                if (orderEntity != null)
-                {
-                    await session.DeleteAsync(orderEntity);
-                    await transaction.CommitAsync();
-                }
+                await _session.DeleteAsync(entity);
+                await _session.FlushAsync();
             }
         }
 
-        public async Task<IEnumerable<Order>> GetAllAsync()
+        public async Task<List<Order>> GetAllAsync()
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                var orderEntities = await session.Query<OrderEntity>().ToListAsync();
-                return orderEntities.Select(OrderMapper.ToDomain);
-            }
+            var entities = await _session.Query<OrderEntity>().ToListAsync();
+            return entities.Select(OrderMapper.ToDomain).ToList();
         }
 
-        public async Task<Order> GetByIdAsync(Guid id)
+        public async Task<Order?> GetByIdAsync(Guid id)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            {
-                var orderEntity = await session.GetAsync<OrderEntity>(id);
-                return orderEntity == null ? null : OrderMapper.ToDomain(orderEntity);
-            }
+            var entity = await _session.GetAsync<OrderEntity>(id);
+            return entity != null ? OrderMapper.ToDomain(entity) : null;
         }
 
         public async Task UpdateAsync(Order order)
         {
-            using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
-            {
-                var orderEntity = OrderMapper.ToEntity(order);
-                await session.UpdateAsync(orderEntity);
-                await transaction.CommitAsync();
-            }
+            var entity = OrderMapper.ToEntity(order);
+            await _session.MergeAsync(entity);
+            await _session.FlushAsync();
         }
     }
 } 

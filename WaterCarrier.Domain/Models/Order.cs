@@ -11,6 +11,8 @@ namespace WaterCarrier.Domain.Models
             Id = Guid.Empty;
             Date = DateTime.MinValue;
             Amount = 0;
+            Employee = null!;
+            Counterparty = null!;
         }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace WaterCarrier.Domain.Models
         /// </summary>
         /// <returns>Кортеж, содержащий созданный объект Order и строку с ошибкой (пустую, если всё успешно).</returns>
         public static (Order order, string error) Create(
+            Guid id,
             DateTime date,
             decimal amount,
             Employee employee,
@@ -60,7 +63,7 @@ namespace WaterCarrier.Domain.Models
             // В противном случае создается и возвращается валидный объект Order с новым Guid и пустой строкой ошибки.
             return !string.IsNullOrEmpty(error) ? (new Order(), error) : (new Order
             {
-                Id = Guid.NewGuid(),
+                Id = id == Guid.Empty ? Guid.NewGuid() : id,
                 Date = date,
                 Amount = amount,
                 Employee = employee,

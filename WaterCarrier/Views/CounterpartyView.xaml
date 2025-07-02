@@ -1,0 +1,35 @@
+<UserControl x:Class="WaterCarrier.Views.CounterpartyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WaterCarrier.Views"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCounterpartiesCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Counterparties}" SelectedItem="{Binding SelectedCounterparty}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="ИНН" Binding="{Binding Inn}" Width="*"/>
+                <DataGridTextColumn Header="Куратор" Binding="{Binding Curator.LastName}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Добавить" Command="{Binding AddCounterpartyCommand}" Margin="5" Padding="10,5"/>
+            <Button Content="Изменить" Command="{Binding EditCounterpartyCommand}" Margin="5" Padding="10,5"/>
+            <Button Content="Удалить" Command="{Binding DeleteCounterpartyCommand}" Margin="5" Padding="10,5"/>
+        </StackPanel>
+    </Grid>
+</UserControl> 

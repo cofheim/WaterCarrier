@@ -11,6 +11,7 @@ namespace WaterCarrier.Domain.Models
             Id = Guid.Empty;
             Name = string.Empty;
             Inn = string.Empty;
+            Curator = null!;
         }
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace WaterCarrier.Domain.Models
         /// </summary>
         /// <returns>Кортеж, содержащий созданный объект Counterparty и строку с ошибкой (пустую, если всё успешно).</returns>
         public static (Counterparty counterparty, string error) Create(
+            Guid id,
             string name,
             string inn,
             Employee curator)
@@ -60,7 +62,7 @@ namespace WaterCarrier.Domain.Models
             // В противном случае создается и возвращается валидный объект Counterparty с новым Guid и пустой строкой ошибки.
             return !string.IsNullOrEmpty(error) ? (new Counterparty(), error) : (new Counterparty
             {
-                Id = Guid.NewGuid(),
+                Id = id == Guid.Empty ? Guid.NewGuid() : id,
                 Name = name,
                 Inn = inn,
                 Curator = curator

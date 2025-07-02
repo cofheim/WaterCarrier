@@ -46,6 +46,7 @@ namespace WaterCarrier.Domain.Models
         /// </summary>
         /// <returns>Кортеж, содержащий созданный объект Employee и строку с ошибкой (пустую, если всё успешно).</returns>
         public static (Employee employee, string error) Create(
+            Guid id,
             string lastName,
             string firstName,
             string patronymic,
@@ -66,7 +67,7 @@ namespace WaterCarrier.Domain.Models
             // В противном случае создается и возвращается валидный объект Employee с новым Guid и пустой строкой ошибки.
             return !string.IsNullOrEmpty(error) ? (new Employee(), error) : (new Employee
             {
-                Id = Guid.NewGuid(),
+                Id = id == Guid.Empty ? Guid.NewGuid() : id,
                 LastName = lastName,
                 FirstName = firstName,
                 Patronymic = patronymic,
