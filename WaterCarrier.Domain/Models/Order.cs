@@ -16,11 +16,11 @@ namespace WaterCarrier.Domain.Models
         /// <summary>
         /// Уникальный идентификатор сущности.
         /// </summary>
-        public Guid Id { get; set; }
-        public DateTime Date { get; set; }
-        public decimal Amount { get; set; }
-        public Employee Employee { get; set; }
-        public Counterparty Counterparty { get; set; }
+        public Guid Id { get; private set; }
+        public DateTime Date { get; private set; }
+        public decimal Amount { get; private set; }
+        public Employee Employee { get; private set; }
+        public Counterparty Counterparty { get; private set; }
 
         /// <summary>
         /// Фабричный метод для создания экземпляра заказа.

@@ -16,10 +16,10 @@ namespace WaterCarrier.Domain.Models
         /// <summary>
         /// Уникальный идентификатор сущности.
         /// </summary>
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Inn { get; set; }
-        public Employee Curator { get; set; }
+        public Guid Id { get; private set; }
+        public string Name { get; private set; }
+        public string Inn { get; private set; }
+        public Employee Curator { get; private set; }
 
         /// <summary>
         /// Фабричный метод для создания экземпляра контрагента.

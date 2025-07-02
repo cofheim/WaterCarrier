@@ -20,12 +20,12 @@ namespace WaterCarrier.Domain.Models
         /// <summary>
         /// Уникальный идентификатор сущности.
         /// </summary>
-        public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Patronymic { get; set; }
-        public DateTime BirthDate { get; set; }
-        public Position Position { get; set; }
+        public Guid Id { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string Patronymic { get; private set; }
+        public DateTime BirthDate { get; private set; }
+        public Position Position { get; private set; }
 
         /// <summary>
         /// Фабричный метод для создания экземпляра сотрудника.

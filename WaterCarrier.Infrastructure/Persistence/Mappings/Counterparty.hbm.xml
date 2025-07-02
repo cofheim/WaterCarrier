@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="WaterCarrier.Infrastructure"
+                   namespace="WaterCarrier.Infrastructure.Persistence.Entities">
+
+  <class name="CounterpartyEntity" table="counterparties">
+    <id name="Id">
+      <generator class="guid.comb"/>
+    </id>
+    <property name="Name" column="name" type="string" length="200" not-null="true"/>
+    <property name="Inn" column="inn" type="string" length="12" not-null="true"/>
+    
+    <many-to-one name="Curator" class="EmployeeEntity" column="curator_id" not-null="true"/>
+    
+  </class>
+
+</hibernate-mapping> 
