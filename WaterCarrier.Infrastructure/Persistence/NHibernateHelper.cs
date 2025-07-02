@@ -7,7 +7,7 @@ namespace WaterCarrier.Infrastructure.Persistence
 {
     public class NHibernateHelper
     {
-        private static ISessionFactory _sessionFactory;
+        private static ISessionFactory _sessionFactory = null!;
 
         private static ISessionFactory SessionFactory
         {

@@ -23,4 +23,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WaterCarrier.Domain\WaterCarrier.Domain.csproj" />
+    <ProjectReference Include="..\WaterCarrier.Application\WaterCarrier.Application.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -23,6 +23,18 @@ namespace WaterCarrier.Domain.Models
         public Counterparty Counterparty { get; private set; }
 
         /// <summary>
+        /// Внутренний конструктор для воссоздания объекта из слоя данных (NHibernate).
+        /// </summary>
+        internal Order(Guid id, DateTime date, decimal amount, Employee employee, Counterparty counterparty)
+        {
+            Id = id;
+            Date = date;
+            Amount = amount;
+            Employee = employee;
+            Counterparty = counterparty;
+        }
+
+        /// <summary>
         /// Фабричный метод для создания экземпляра заказа.
         /// Инкапсулирует логику валидации и гарантирует, что объект не будет создан в невалидном состоянии.
         /// </summary>

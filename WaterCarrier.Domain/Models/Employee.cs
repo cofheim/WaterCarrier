@@ -28,6 +28,19 @@ namespace WaterCarrier.Domain.Models
         public Position Position { get; private set; }
 
         /// <summary>
+        /// Внутренний конструктор для воссоздания объекта из слоя данных (NHibernate).
+        /// </summary>
+        internal Employee(Guid id, string lastName, string firstName, string patronymic, DateTime birthDate, Position position)
+        {
+            Id = id;
+            LastName = lastName;
+            FirstName = firstName;
+            Patronymic = patronymic;
+            BirthDate = birthDate;
+            Position = position;
+        }
+
+        /// <summary>
         /// Фабричный метод для создания экземпляра сотрудника.
         /// Инкапсулирует логику валидации и гарантирует, что объект не будет создан в невалидном состоянии.
         /// </summary>

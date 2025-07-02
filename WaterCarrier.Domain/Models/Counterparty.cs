@@ -22,6 +22,17 @@ namespace WaterCarrier.Domain.Models
         public Employee Curator { get; private set; }
 
         /// <summary>
+        /// Внутренний конструктор для воссоздания объекта из слоя данных (NHibernate).
+        /// </summary>
+        internal Counterparty(Guid id, string name, string inn, Employee curator)
+        {
+            Id = id;
+            Name = name;
+            Inn = inn;
+            Curator = curator;
+        }
+
+        /// <summary>
         /// Фабричный метод для создания экземпляра контрагента.
         /// Инкапсулирует логику валидации и гарантирует, что объект не будет создан в невалидном состоянии.
         /// </summary>

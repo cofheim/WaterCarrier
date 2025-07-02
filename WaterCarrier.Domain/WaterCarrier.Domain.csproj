@@ -10,4 +10,10 @@
     <PackageReference Include="NHibernate" Version="5.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>WaterCarrier.Infrastructure</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>
