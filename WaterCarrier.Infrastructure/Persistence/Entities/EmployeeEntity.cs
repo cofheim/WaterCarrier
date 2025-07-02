@@ -9,6 +9,6 @@ namespace WaterCarrier.Infrastructure.Persistence.Entities
         public virtual string LastName { get; set; }
         public virtual string Patronymic { get; set; }
         public virtual DateTime BirthDate { get; set; }
-        public virtual int Position { get; set; } // Enum будет маппиться как int
+        public virtual int Position { get; set; }
     }
 } 

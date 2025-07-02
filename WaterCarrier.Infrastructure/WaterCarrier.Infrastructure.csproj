@@ -11,4 +11,16 @@
     <PackageReference Include="NHibernate" Version="5.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Persistence\Mappings\Employee.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\Counterparty.hbm.xml" />
+    <EmbeddedResource Include="Persistence\Mappings\Order.hbm.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="hibernate.cfg.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

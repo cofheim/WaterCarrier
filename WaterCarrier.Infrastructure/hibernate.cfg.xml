@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    
+    <!-- Connection settings -->
+    <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
+    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+    <property name="dialect">NHibernate.Dialect.MariaDbDialect</property>
+    <property name="connection.connection_string">
+      Server=localhost;Port=3306;Database=water_carrier_db;User ID=root;Password=Ellenoize2002;
+    </property>
+
+    <!-- Other settings -->
+    <property name="show_sql">true</property>
+    <property name="hbm2ddl.auto">update</property>
+    
+  </session-factory>
+</hibernate-configuration> 
