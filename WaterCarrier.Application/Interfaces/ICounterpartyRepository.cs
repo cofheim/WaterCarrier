@@ -8,6 +8,6 @@ namespace WaterCarrier.Application.Interfaces
         Task<List<Counterparty>> GetAllAsync();
         Task AddAsync(Counterparty entity);
         Task UpdateAsync(Counterparty entity);
-        Task DeleteAsync(Guid id);
+        Task<(bool success, string errorMessage)> DeleteAsync(Guid id);
     }
 } 

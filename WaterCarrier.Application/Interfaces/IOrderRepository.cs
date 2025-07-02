@@ -11,6 +11,6 @@ namespace WaterCarrier.Application.Interfaces
         Task<List<Order>> GetAllAsync();
         Task AddAsync(Order entity);
         Task UpdateAsync(Order entity);
-        Task DeleteAsync(Guid id);
+        Task<(bool success, string errorMessage)> DeleteAsync(Guid id);
     }
 } 

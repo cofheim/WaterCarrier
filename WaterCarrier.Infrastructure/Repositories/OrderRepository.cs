@@ -27,13 +27,27 @@ namespace WaterCarrier.Infrastructure.Repositories
             await _session.FlushAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<(bool success, string errorMessage)> DeleteAsync(Guid id)
         {
-            var entity = await _session.GetAsync<OrderEntity>(id);
-            if (entity != null)
+            using (var transaction = _session.BeginTransaction())
             {
-                await _session.DeleteAsync(entity);
-                await _session.FlushAsync();
+                try
+                {
+                    var entity = await _session.GetAsync<OrderEntity>(id);
+                    if (entity == null)
+                    {
+                        return (false, "Заказ не найден");
+                    }
+
+                    await _session.DeleteAsync(entity);
+                    await transaction.CommitAsync();
+                    return (true, string.Empty);
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return (false, $"Ошибка при удалении заказа: {ex.Message}");
+                }
             }
         }
 

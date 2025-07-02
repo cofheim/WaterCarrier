@@ -7,6 +7,7 @@ using WaterCarrier.Application.Interfaces;
 using WaterCarrier.Domain.Models;
 using WaterCarrier.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 
 namespace WaterCarrier.ViewModels
 {
@@ -63,8 +64,15 @@ namespace WaterCarrier.ViewModels
         {
             if (SelectedCounterparty != null)
             {
-                await _counterpartyRepository.DeleteAsync(SelectedCounterparty.Id);
-                Counterparties.Remove(SelectedCounterparty);
+                var result = await _counterpartyRepository.DeleteAsync(SelectedCounterparty.Id);
+                if (result.success)
+                {
+                    Counterparties.Remove(SelectedCounterparty);
+                }
+                else
+                {
+                    MessageBox.Show(result.errorMessage, "Ошибка удаления", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

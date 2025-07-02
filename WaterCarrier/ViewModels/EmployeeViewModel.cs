@@ -8,6 +8,7 @@ using WaterCarrier.Application.Interfaces;
 using WaterCarrier.Domain.Models;
 using WaterCarrier.Services;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 
 namespace WaterCarrier.ViewModels
 {
@@ -64,8 +65,15 @@ namespace WaterCarrier.ViewModels
         {
             if (SelectedEmployee != null)
             {
-                await _employeeRepository.DeleteAsync(SelectedEmployee.Id);
-                Employees.Remove(SelectedEmployee);
+                var result = await _employeeRepository.DeleteAsync(SelectedEmployee.Id);
+                if (result.success)
+                {
+                    Employees.Remove(SelectedEmployee);
+                }
+                else
+                {
+                    MessageBox.Show(result.errorMessage, "Ошибка удаления", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 

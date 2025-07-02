@@ -27,13 +27,47 @@ namespace WaterCarrier.Infrastructure.Repositories
             await _session.FlushAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<(bool success, string errorMessage)> DeleteAsync(Guid id)
         {
-            var entity = await _session.GetAsync<EmployeeEntity>(id);
-            if (entity != null)
+            using (var transaction = _session.BeginTransaction())
             {
-                await _session.DeleteAsync(entity);
-                await _session.FlushAsync();
+                try
+                {
+                    var entity = await _session.GetAsync<EmployeeEntity>(id);
+                    if (entity == null)
+                    {
+                        return (false, "Сотрудник не найден");
+                    }
+
+                    // Проверяем, является ли сотрудник куратором контрагентов
+                    var counterpartiesCount = await _session.Query<CounterpartyEntity>()
+                        .Where(c => c.Curator.Id == id)
+                        .CountAsync();
+
+                    if (counterpartiesCount > 0)
+                    {
+                        return (false, "Невозможно удалить сотрудника, так как он является куратором контрагентов");
+                    }
+
+                    // Проверяем, связан ли сотрудник с заказами
+                    var ordersCount = await _session.Query<OrderEntity>()
+                        .Where(o => o.Employee.Id == id)
+                        .CountAsync();
+
+                    if (ordersCount > 0)
+                    {
+                        return (false, "Невозможно удалить сотрудника, так как он связан с заказами");
+                    }
+
+                    await _session.DeleteAsync(entity);
+                    await transaction.CommitAsync();
+                    return (true, string.Empty);
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    return (false, $"Ошибка при удалении сотрудника: {ex.Message}");
+                }
             }
         }
 
