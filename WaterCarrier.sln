@@ -5,6 +5,12 @@ VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterCarrier", "WaterCarrier\WaterCarrier.csproj", "{44C73EF5-D170-4E2B-AF55-7A36525874A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterCarrier.Domain", "WaterCarrier.Domain\WaterCarrier.Domain.csproj", "{A9D1734A-2803-4A03-9533-88A66063A0E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterCarrier.Application", "WaterCarrier.Application\WaterCarrier.Application.csproj", "{E25D63BF-C786-4B97-8143-8369FC60B93A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterCarrier.Infrastructure", "WaterCarrier.Infrastructure\WaterCarrier.Infrastructure.csproj", "{B643E33C-2BFA-4667-9B64-368A214D0FAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{44C73EF5-D170-4E2B-AF55-7A36525874A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44C73EF5-D170-4E2B-AF55-7A36525874A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44C73EF5-D170-4E2B-AF55-7A36525874A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9D1734A-2803-4A03-9533-88A66063A0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9D1734A-2803-4A03-9533-88A66063A0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9D1734A-2803-4A03-9533-88A66063A0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9D1734A-2803-4A03-9533-88A66063A0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E25D63BF-C786-4B97-8143-8369FC60B93A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E25D63BF-C786-4B97-8143-8369FC60B93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E25D63BF-C786-4B97-8143-8369FC60B93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E25D63BF-C786-4B97-8143-8369FC60B93A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B643E33C-2BFA-4667-9B64-368A214D0FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B643E33C-2BFA-4667-9B64-368A214D0FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B643E33C-2BFA-4667-9B64-368A214D0FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B643E33C-2BFA-4667-9B64-368A214D0FAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

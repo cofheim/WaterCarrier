@@ -1,0 +1,65 @@
+using WaterCarrier.Domain.Enums;
+
+namespace WaterCarrier.Domain.Models
+{
+    public class Employee
+    {
+        /// <summary>
+        /// Приватный конструктор для создания "пустого" объекта через фабричный метод при ошибке валидации.
+        /// Инициализирует поля значениями по умолчанию для предсказуемого и безопасного состояния.
+        /// </summary>
+        private Employee()
+        {
+            Id = Guid.Empty;
+            LastName = string.Empty;
+            FirstName = string.Empty;
+            Patronymic = string.Empty;
+            BirthDate = DateTime.MinValue;
+        }
+
+        /// <summary>
+        /// Уникальный идентификатор сущности.
+        /// </summary>
+        public Guid Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Patronymic { get; set; }
+        public DateTime BirthDate { get; set; }
+        public Position Position { get; set; }
+
+        /// <summary>
+        /// Фабричный метод для создания экземпляра сотрудника.
+        /// Инкапсулирует логику валидации и гарантирует, что объект не будет создан в невалидном состоянии.
+        /// </summary>
+        /// <returns>Кортеж, содержащий созданный объект Employee и строку с ошибкой (пустую, если всё успешно).</returns>
+        public static (Employee employee, string error) Create(
+            string lastName,
+            string firstName,
+            string patronymic,
+            DateTime birthDate,
+            Position position)
+        {
+            var error = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(lastName))
+                error = "Фамилия не может быть пустой.";
+            else if (string.IsNullOrWhiteSpace(firstName))
+                error = "Имя не может быть пустым.";
+            else if (birthDate > DateTime.UtcNow)
+                error = "Дата рождения не может быть в будущем.";
+
+            // Тернарный оператор для возврата результата.
+            // Если была найдена ошибка, возвращается "пустой" объект Employee и текст ошибки.
+            // В противном случае создается и возвращается валидный объект Employee с новым Guid и пустой строкой ошибки.
+            return !string.IsNullOrEmpty(error) ? (new Employee(), error) : (new Employee
+            {
+                Id = Guid.NewGuid(),
+                LastName = lastName,
+                FirstName = firstName,
+                Patronymic = patronymic,
+                BirthDate = birthDate,
+                Position = position
+            }, string.Empty);
+        }
+    }
+}
